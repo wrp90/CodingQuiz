@@ -6,13 +6,13 @@ var scoreKeep = document.querySelector(".score");
 // var startButton = document.querySelector(".start-button");
 
 var timer;
-var timerCount = 60
+var timerCount = 5
 var score = 0
 
 
-function startQuiz() {
-  timerCount = 60
-}
+// function startQuiz() {
+//   timerCount = 60
+// }
 
 
 
@@ -20,6 +20,7 @@ function startQuiz() {
 function startTimer() {
   timer = setInterval(function() {
     timerCount--;
+    console.log(timerCount)
     timerElement.innerHTML = timerCount;
       if (timerCount === 0) {
       clearInterval(timer);
@@ -30,18 +31,22 @@ function startTimer() {
 
 
 function wrongAnswer() {
-  score++;
+  score--;
   setScore();
 }
 
 
 
 function setScore() {
-  score.textContent = score;
+  scoreKeep.textContent = score;
+}
+
+function resetGame() {
+
 }
 
 
 
 document.getElementById("start-button").addEventListener("click", startTimer);
-
+// document.getElementById("reset-button").addEventListener("click", startTimer);
 
