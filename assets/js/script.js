@@ -1,18 +1,21 @@
 // Coding Quiz
 
 var timerElement = document.querySelector(".timer-count");
-var startButton = document.querySelector(".start-button");
+var startButton = document.querySelector("#start-button");
+var resetButton = document.querySelector("#reset-button");
 var scoreKeep = document.querySelector(".score");
-// var startButton = document.querySelector(".start-button");
 
 var timer;
 var timerCount = 5
 var score = 0
 
 
-// function startQuiz() {
-//   timerCount = 60
-// }
+function startQuiz() {
+  timerCount = 60;
+  // hideButton();
+  startButton.disable = true;
+  startTimer();
+}
 
 
 
@@ -20,13 +23,22 @@ var score = 0
 function startTimer() {
   timer = setInterval(function() {
     timerCount--;
-    console.log(timerCount)
+    // hideButton()
     timerElement.innerHTML = timerCount;
       if (timerCount === 0) {
       clearInterval(timer);
       wrongAnswer();
     }
   }, 1000);
+}
+
+function hideButton() {
+  // startButton.style.display = "block";
+  startButton.style.display = "none";
+}
+
+function showButton() {
+  startButton.style.display = "block";
 }
 
 
@@ -42,11 +54,15 @@ function setScore() {
 }
 
 function resetGame() {
-
+  scoreKeep.textContent = score;
+  timerCount.textContent = 60;
+  setScore();
+  showButton();
+  clearInterval(timer);
 }
 
 
 
-document.getElementById("start-button").addEventListener("click", startTimer);
-// document.getElementById("reset-button").addEventListener("click", startTimer);
+document.getElementById("start-button").addEventListener("click", startQuiz);
+document.getElementById("reset-button").addEventListener("click", resetGame);
 
