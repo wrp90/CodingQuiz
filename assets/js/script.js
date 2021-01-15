@@ -6,14 +6,14 @@ var resetButton = document.querySelector("#reset-button");
 var scoreKeep = document.querySelector(".score");
 
 var timer;
-var timerCount = 5
-var score = 0
+var timerCount;
+var score;
+
 
 
 function startQuiz() {
   timerCount = 60;
-  // hideButton();
-  startButton.disable = true;
+  document.getElementById("start-button").disabled = true;
   startTimer();
 }
 
@@ -23,7 +23,6 @@ function startQuiz() {
 function startTimer() {
   timer = setInterval(function() {
     timerCount--;
-    // hideButton()
     timerElement.innerHTML = timerCount;
       if (timerCount === 0) {
       clearInterval(timer);
@@ -32,32 +31,17 @@ function startTimer() {
   }, 1000);
 }
 
-function hideButton() {
-  // startButton.style.display = "block";
-  startButton.style.display = "none";
-}
-
-function showButton() {
-  startButton.style.display = "block";
-}
 
 
 function wrongAnswer() {
-  score--;
-  setScore();
+  scoreKeep.textContent--;
 }
 
-
-
-function setScore() {
-  scoreKeep.textContent = score;
-}
 
 function resetGame() {
-  scoreKeep.textContent = score;
-  timerCount.textContent = 60;
-  setScore();
-  showButton();
+  timerElement.textContent = 60;
+  scoreKeep.textContent = 0;
+  document.getElementById("start-button").disabled = false;
   clearInterval(timer);
 }
 
