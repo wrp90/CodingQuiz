@@ -1,5 +1,7 @@
 // Coding Quiz
 
+
+// Global variables
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.querySelector("#start-button");
 var resetButton = document.querySelector("#reset-button");
@@ -11,8 +13,8 @@ var answerBoxB = document.querySelector(".answer-box-b")
 var answerBoxC = document.querySelector(".answer-box-c")
 var timer;
 var timerCount;
-var defaultAnswers = ["A","B","C","D"]
 
+// question variables
 var questions = [
   {
     question: "1.) Who invented JavaScript?",
@@ -50,31 +52,35 @@ var questions = [
   }
 ]
 
-
-function showQuestions() {
+// function to show question 1
+function showQuestion1() {
   questionBox.innerHTML = questions[0].question;
-  // reach into the html
-  // grab a place to put an answer
-  // put the answer in that place
   answerBoxA.innerHTML = questions[0].answers[0].answer;
   answerBoxB.innerHTML = questions[0].answers[1].answer;
   answerBoxC.innerHTML = questions[0].answers[2].answer;
-  console.log(questionBox.textcontent)
+}
+
+// function to show question 2
+function showQuestion2() {
+  questionBox.innerHTML = questions[1].question;
+  answerBoxA.innerHTML = questions[1].answers[0].answer;
+  answerBoxB.innerHTML = questions[1].answers[1].answer;
+  answerBoxC.innerHTML = questions[1].answers[2].answer;
 }
 
 
 
-
+// function to start quiz
 function startQuiz() {
   timerCount = 5;
   document.getElementById("start-button").disabled = true;
   startTimer();
-  showQuestions();
+  showQuestion1()
 }
 
 
 
-
+// function to start timer
 function startTimer() {
   timer = setInterval(function () {
     timerCount--;
@@ -87,25 +93,18 @@ function startTimer() {
 }
 
 
-
+// wrong answer function
 function wrongAnswer() {
   scoreKeep.textContent--;
+  questionBox.innerHTML = "You Lose."
 }
 
-
+// function to reset game and display default prompt //
 function resetGame() {
-  // ------------ reset the questions
-  // grab your first question from questions array
-  // put that question and answrers in html
   questionBox.innerHTML = "Try to answer the following questions before the timer runs out.";
   answerBoxA.innerHTML = "A";
   answerBoxB.innerHTML = "B";
   answerBoxC.innerHTML = "C";
-
-
-
-
-
   timerElement.textContent = 60;
   scoreKeep.textContent = 0;
   document.getElementById("start-button").disabled = false;
@@ -113,7 +112,7 @@ function resetGame() {
 }
 
 
-
+// start and reset buttons
 document.getElementById("start-button").addEventListener("click", startQuiz);
 document.getElementById("reset-button").addEventListener("click", resetGame);
 
