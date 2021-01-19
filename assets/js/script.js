@@ -12,10 +12,10 @@ var headerBox = document.querySelector(".header-box");
 var answerBoxA = document.querySelector("#answerBtn-a");
 var answerBoxB = document.querySelector("#answerBtn-b");
 var answerBoxC = document.querySelector("#answerBtn-c");
+var score = 0;
 var timer;
 var timerCount;
-
-
+var answers = ["Brendon Eich", "Ryan Dahl", "Hypertext Markup Language", "Boolean"]
 
 // question variables with answers
 var questions = [
@@ -31,7 +31,7 @@ var questions = [
         isCorrect: false
       },
       {
-        answer: "Ryan Dahl",
+        answer: "Herb Sutter",
         isCorrect: false
       },
     ]
@@ -40,16 +40,16 @@ var questions = [
     question: "2.) Who invented Node?",
     answers: [
       {
-        answer: "Brendon Eich",
-        isCorrect: false
-      },
-      {
         answer: "Sheryl Sandberg",
         isCorrect: false
       },
       {
         answer: "Ryan Dahl",
         isCorrect: true
+      },
+      {
+        answer: "Dennis Ritchie",
+        isCorrect: false
       },
     ]
   },
@@ -95,7 +95,6 @@ function showQuestion1() {
   answerBoxA.innerHTML = questions[0].answers[0].answer;
   answerBoxB.innerHTML = questions[0].answers[1].answer;
   answerBoxC.innerHTML = questions[0].answers[2].answer;
-  console.log(questions)
 }
 
 // function to show question 2
@@ -106,6 +105,21 @@ function showQuestion2() {
   answerBoxC.innerHTML = questions[1].answers[2].answer;
 }
 
+// function to show question 3
+function showQuestion3() {
+  questionBox.innerHTML = questions[2].question;
+  answerBoxA.innerHTML = questions[2].answers[0].answer;
+  answerBoxB.innerHTML = questions[2].answers[1].answer;
+  answerBoxC.innerHTML = questions[2].answers[2].answer;
+}
+
+// function to show question 4
+function showQuestion4() {
+  questionBox.innerHTML = questions[3].question;
+  answerBoxA.innerHTML = questions[3].answers[0].answer;
+  answerBoxB.innerHTML = questions[3].answers[1].answer;
+  answerBoxC.innerHTML = questions[3].answers[2].answer;
+}
 
 
 // function to start quiz
@@ -116,12 +130,38 @@ function startQuiz() {
   showQuestion1()
 }
 
-// function to check answer conditions
-function checkAns() {
-  if (questions[0].answers[0].isCorrect == true) {
+// Event listener for all three ans buttons with a function 
+// to generate the next question when correct ans is selected
+ansBox.addEventListener("click", function(event) {
+  var element = event.target;
+  if (element.innerHTML === answers[0]) {
     scoreKeep.textContent++;
     showQuestion2();
-  } 
+  } else if (element.innerHTML === answers[1]) {
+    scoreKeep.textContent++;
+    showQuestion3();
+  } else if (element.innerHTML === answers[2]) {
+    scoreKeep.textContent++;
+    showQuestion4();
+  } else if (element.innerHTML === answers[3]) {
+    scoreKeep.textContent++;
+  } else {
+    timerCount--;
+    scoreKeep.innerHTML--;
+  }
+});
+
+// a function to end the game
+function gameOver() {
+  questionBox.innerHTML = "Game Over";
+  timerElement.innerHTML = "-";
+}
+
+// a function to gather user input and record the score
+function recordScore() {
+  var userInput = prompt("Please enter your initials.")
+  scoreKeep.textContent = score;
+  localStorage.setItem(userInput, score,);
 }
 
 
@@ -136,7 +176,6 @@ function startTimer() {
     }
   }, 1000);
 }
-
 
 // wrong answer function
 function wrongAnswer() {
@@ -155,12 +194,6 @@ function resetGame() {
   document.getElementById("start-button").disabled = false;
   clearInterval(timer);
 }
-
-
-// answer buttons
-document.getElementById("answerBtn-a").addEventListener("click", checkAns);
-// document.getElementById("answerBtn-b").addEventListener("click", checkAns);
-// document.getElementById("answerBtn-c").addEventListener("click", checkAns);
 
 // start and reset buttons
 document.getElementById("start-button").addEventListener("click", startQuiz);
