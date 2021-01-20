@@ -12,5 +12,10 @@ as well as a point deduction.
 * Once all the questions are answered and the submit button is pressed, you will be presented with a prompt to enter your initals and
 your final score will be recorded into local storage. 
 * Highest possible score as of now is 4 points. 
+ 
+# Current Bug
+
+* If you click outside of the answer choices a point will be dedudcted from the score.  This is because the event listener
+is wired for the container and not the individual buttons.  Currently working on fix. 
 
 ![Getting Started](./assets/imgs/cqss.png)

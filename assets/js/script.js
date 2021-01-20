@@ -8,7 +8,6 @@ var resetButton = document.querySelector("#reset-button");
 var scoreKeep = document.querySelector(".score");
 var questionBox = document.querySelector(".question-box");
 var ansBox = document.querySelector(".ans-container")
-var headerBox = document.querySelector(".header-box");
 var answerBoxA = document.querySelector("#answerBtn-a");
 var answerBoxB = document.querySelector("#answerBtn-b");
 var answerBoxC = document.querySelector("#answerBtn-c");
@@ -131,6 +130,7 @@ function showQuestion4() {
 function showFinalQ() {
   questionBox.innerHTML = questions[4].question;
   answerBoxA.innerHTML = questions[4].answers[0].answer;
+  answerBoxA.innerHTML = "-";
   answerBoxB.innerHTML = "-";
   answerBoxC.innerHTML = "-";
 }
@@ -196,6 +196,7 @@ function recordScore() {
   document.getElementById("answerBtn-a").disabled = true;
   document.getElementById("answerBtn-b").disabled = true;
   document.getElementById("answerBtn-c").disabled = true;
+  document.getElementById("last-score").innerHTML = localStorage.getItem(userInput);
 }
 
 
@@ -205,6 +206,11 @@ function startTimer() {
     timerCount--;
     timerElement.innerHTML = timerCount;
     if (timerCount === 0) {
+      clearInterval(timer);
+      wrongAnswer();
+      gameOver();
+      recordScore();
+    } else if (timerCount < 0) {
       clearInterval(timer);
       wrongAnswer();
       gameOver();
@@ -225,14 +231,16 @@ function resetGame() {
   answerBoxA.innerHTML = "A";
   answerBoxB.innerHTML = "B";
   answerBoxC.innerHTML = "C";
-  document.getElementById("answerBtn-a").disabled = false;
-  document.getElementById("answerBtn-b").disabled = false;
-  document.getElementById("answerBtn-c").disabled = false;
+  document.getElementById("answerBtn-a").disabled = true;
+  document.getElementById("answerBtn-b").disabled = true;
+  document.getElementById("answerBtn-c").disabled = true;
   timerElement.textContent = 60;
   scoreKeep.textContent = 0;
   document.getElementById("start-button").disabled = false;
   clearInterval(timer);
 }
+
+
 
 // start and reset buttons
 document.getElementById("start-button").addEventListener("click", startQuiz);
