@@ -13,7 +13,7 @@ var answerBoxB = document.querySelector("#answerBtn-b");
 var answerBoxC = document.querySelector("#answerBtn-c");
 var timer;
 var timerCount;
-var answers = ["Brendon Eich", "Ryan Dahl", "Hypertext Markup Language", "Boolean", "Submit"]
+var answers = ["Brendon Eich", "Ryan Dahl", "Hypertext Markup Language", "Boolean"]
 
 // variables to display questions and answer choices
 var questions = [
@@ -94,6 +94,8 @@ var questions = [
   }
 ]
 
+// The next 5 functions are simple functions to display the questions from the questions array
+
 // function to show question 1
 function showQuestion1() {
   questionBox.innerHTML = questions[0].question;
@@ -135,12 +137,13 @@ function showFinalQ() {
   answerBoxC.innerHTML = "-";
 }
 
-// function to start quiz
+// function to start quiz timer and show question one.  Also reactivates the ans buttons in 
+// case reset button was pressed
 function startQuiz() {
+  timerCount = 60;
   document.getElementById("answerBtn-a").disabled = false;
   document.getElementById("answerBtn-b").disabled = false;
   document.getElementById("answerBtn-c").disabled = false;
-  timerCount = 60;
   document.getElementById("start-button").disabled = true;
   startTimer();
   showQuestion1()
@@ -173,12 +176,10 @@ ansBox.addEventListener("click", function(event) {
     timerCount -= 5;
     scoreKeep.innerHTML--;
   }
-  console.log(element)
 });
 
 // a function to end the game
 function gameOver() {
-  // questionBox.innerHTML = "Game Over";
   clearInterval(timer);
   questionBox.innerHTML = "GAME OVER"
   document.getElementById("answerBtn-a").disabled = true;
@@ -187,20 +188,19 @@ function gameOver() {
 
 }
 
-// a function to gather user input and record the score
+// a function to gather user input and record the score to local storage
 function recordScore() {
-  var userInput = prompt("Please enter your initials.")
+  var userInput = Number(prompt("Please enter your initials to record your score."));
   localStorage.setItem(userInput, scoreKeep.innerHTML);
   clearInterval(timer);
   timerElement.innerHTML = "-"
   document.getElementById("answerBtn-a").disabled = true;
   document.getElementById("answerBtn-b").disabled = true;
   document.getElementById("answerBtn-c").disabled = true;
-  document.getElementById("last-score").innerHTML = localStorage.getItem(userInput);
+  document.getElementById("last-score").textContent = "Last Score: " + localStorage.getItem(userInput);
 }
 
-
-// function to start timer
+// function to start timer along with if conditionals to account for timer running out
 function startTimer() {
   timer = setInterval(function () {
     timerCount--;
@@ -219,13 +219,14 @@ function startTimer() {
   }, 1000);
 }
 
-// wrong answer function
+// wrong answer function that takes one point off the score
 function wrongAnswer() {
   scoreKeep.textContent--;
   questionBox.innerHTML = "GAME OVER"
 }
 
-// function to reset game and display default prompt //
+// function to reset game and display default prompt, disabled the ans buttons
+// so no input can be given
 function resetGame() {
   questionBox.innerHTML = "Try to answer the following questions before the timer runs out.";
   answerBoxA.innerHTML = "A";
@@ -240,9 +241,10 @@ function resetGame() {
   clearInterval(timer);
 }
 
-
-
-// start and reset buttons
+// Event listeners for start, reset and submit buttons
 document.getElementById("start-button").addEventListener("click", startQuiz);
 document.getElementById("reset-button").addEventListener("click", resetGame);
 document.getElementById("submit-button").addEventListener("click", recordScore);
+
+
+
