@@ -12,27 +12,24 @@ var headerBox = document.querySelector(".header-box");
 var answerBoxA = document.querySelector("#answerBtn-a");
 var answerBoxB = document.querySelector("#answerBtn-b");
 var answerBoxC = document.querySelector("#answerBtn-c");
-var score = 0;
 var timer;
 var timerCount;
-var answers = ["Brendon Eich", "Ryan Dahl", "Hypertext Markup Language", "Boolean"]
+var answers = ["Brendon Eich", "Ryan Dahl", "Hypertext Markup Language", "Boolean", "Submit"]
 
-// question variables with answers
+// variables to display questions and answer choices
 var questions = [
   {
     question: "1.) Who invented JavaScript?",
     answers: [
       {
         answer: "Brendon Eich",
-        isCorrect: true
+        // correct
       },
       {
         answer: "Guido van Rossum",
-        isCorrect: false
       },
       {
         answer: "Herb Sutter",
-        isCorrect: false
       },
     ]
   },
@@ -41,15 +38,13 @@ var questions = [
     answers: [
       {
         answer: "Sheryl Sandberg",
-        isCorrect: false
       },
       {
         answer: "Ryan Dahl",
-        isCorrect: true
+        // correct
       },
       {
         answer: "Dennis Ritchie",
-        isCorrect: false
       },
     ]
   },
@@ -58,15 +53,13 @@ var questions = [
     answers: [
       {
         answer: "Hyper Trainer Marking Language",
-        isCorrect: false
       },
       {
         answer: "Hypertext Markup Language",
-        isCorrect: true
+        // correct
       },
       {
         answer: "Hyper Text Markup Leveler",
-        isCorrect: false
       }
     ]
   },
@@ -75,15 +68,28 @@ var questions = [
     answers: [
       {
         answer: "String",
-        isCorrect: false
       },
       {
         answer: "Array",
-        isCorrect: false
       },
       {
         answer: "Boolean",
-        isCorrect: true
+        // correct
+      }
+    ]
+  },
+  {
+    question: "Game Over.",
+    answers: [
+      {
+        answer: "Submit",
+        // correct
+      },
+      {
+        answer: "B",
+      },
+      {
+        answer: "C",
       }
     ]
   }
@@ -121,6 +127,13 @@ function showQuestion4() {
   answerBoxC.innerHTML = questions[3].answers[2].answer;
 }
 
+// a filler question to end the game
+function showFinalQ() {
+  questionBox.innerHTML = questions[4].question;
+  answerBoxA.innerHTML = questions[4].answers[0].answer;
+  answerBoxB.innerHTML = "-";
+  answerBoxC.innerHTML = "-";
+}
 
 // function to start quiz
 function startQuiz() {
@@ -145,23 +158,29 @@ ansBox.addEventListener("click", function(event) {
     showQuestion4();
   } else if (element.innerHTML === answers[3]) {
     scoreKeep.textContent++;
+    showFinalQ();
+  } else if (element.innerHTML === answers[4]) {
+    gameOver();
+    timerCount.disabled = true;
+    timerElement.innerHTML = "-"
+    recordScore();
   } else {
-    timerCount--;
+    timerCount -= 5;
     scoreKeep.innerHTML--;
   }
+  console.log(element)
 });
 
 // a function to end the game
 function gameOver() {
-  questionBox.innerHTML = "Game Over";
-  timerElement.innerHTML = "-";
+  // questionBox.innerHTML = "Game Over";
+  clearInterval(timer);
 }
 
 // a function to gather user input and record the score
 function recordScore() {
   var userInput = prompt("Please enter your initials.")
-  scoreKeep.textContent = score;
-  localStorage.setItem(userInput, score,);
+  localStorage.setItem(userInput, scoreKeep.innerHTML);
 }
 
 
@@ -173,6 +192,7 @@ function startTimer() {
     if (timerCount === 0) {
       clearInterval(timer);
       wrongAnswer();
+      gameOver();
     }
   }, 1000);
 }
