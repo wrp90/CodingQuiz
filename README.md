@@ -11,5 +11,6 @@ as well as a point deduction.
 * If the timer reaches zero, the game will end and your score will be recorded into local storage. 
 * Once all the questions are answered and the submit button is pressed, you will be presented with a prompt to enter your initals and
 your final score will be recorded into local storage. 
+* Highest possible score as of now is 4 points. 
 
 ![Getting Started](./assets/imgs/cqss.png)

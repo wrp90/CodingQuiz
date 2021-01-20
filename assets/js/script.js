@@ -79,11 +79,11 @@ var questions = [
     ]
   },
   {
+    // filler question to end the game
     question: "Game Over.",
     answers: [
       {
-        answer: "Submit",
-        // correct
+        answer: "A",
       },
       {
         answer: "B",
@@ -137,6 +137,9 @@ function showFinalQ() {
 
 // function to start quiz
 function startQuiz() {
+  document.getElementById("answerBtn-a").disabled = false;
+  document.getElementById("answerBtn-b").disabled = false;
+  document.getElementById("answerBtn-c").disabled = false;
   timerCount = 60;
   document.getElementById("start-button").disabled = true;
   startTimer();
@@ -158,12 +161,14 @@ ansBox.addEventListener("click", function(event) {
     showQuestion4();
   } else if (element.innerHTML === answers[3]) {
     scoreKeep.textContent++;
+    document.getElementById("answerBtn-a").disabled = true;
+    document.getElementById("answerBtn-b").disabled = true;
+    document.getElementById("answerBtn-c").disabled = true;
     showFinalQ();
   } else if (element.innerHTML === answers[4]) {
     gameOver();
     timerCount.disabled = true;
     timerElement.innerHTML = "-"
-    recordScore();
   } else {
     timerCount -= 5;
     scoreKeep.innerHTML--;
@@ -175,12 +180,22 @@ ansBox.addEventListener("click", function(event) {
 function gameOver() {
   // questionBox.innerHTML = "Game Over";
   clearInterval(timer);
+  questionBox.innerHTML = "GAME OVER"
+  document.getElementById("answerBtn-a").disabled = true;
+  document.getElementById("answerBtn-b").disabled = true;
+  document.getElementById("answerBtn-c").disabled = true;
+
 }
 
 // a function to gather user input and record the score
 function recordScore() {
   var userInput = prompt("Please enter your initials.")
   localStorage.setItem(userInput, scoreKeep.innerHTML);
+  clearInterval(timer);
+  timerElement.innerHTML = "-"
+  document.getElementById("answerBtn-a").disabled = true;
+  document.getElementById("answerBtn-b").disabled = true;
+  document.getElementById("answerBtn-c").disabled = true;
 }
 
 
@@ -210,6 +225,9 @@ function resetGame() {
   answerBoxA.innerHTML = "A";
   answerBoxB.innerHTML = "B";
   answerBoxC.innerHTML = "C";
+  document.getElementById("answerBtn-a").disabled = false;
+  document.getElementById("answerBtn-b").disabled = false;
+  document.getElementById("answerBtn-c").disabled = false;
   timerElement.textContent = 60;
   scoreKeep.textContent = 0;
   document.getElementById("start-button").disabled = false;
@@ -219,4 +237,4 @@ function resetGame() {
 // start and reset buttons
 document.getElementById("start-button").addEventListener("click", startQuiz);
 document.getElementById("reset-button").addEventListener("click", resetGame);
-
+document.getElementById("submit-button").addEventListener("click", recordScore);
