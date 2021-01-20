@@ -193,6 +193,7 @@ function startTimer() {
       clearInterval(timer);
       wrongAnswer();
       gameOver();
+      recordScore();
     }
   }, 1000);
 }
