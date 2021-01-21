@@ -225,7 +225,7 @@ function wrongAnswer() {
   questionBox.innerHTML = "GAME OVER"
 }
 
-// function to reset game and display default prompt, disabled the ans buttons
+// function to reset game and display default prompt and disabled the ans buttons
 // so no input can be given
 function resetGame() {
   questionBox.innerHTML = "Try to answer the following questions before the timer runs out.";
