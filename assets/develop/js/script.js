@@ -190,7 +190,7 @@ function gameOver() {
 
 // a function to gather user input and record the score to local storage
 function recordScore() {
-  var userInput = Number(prompt("Please enter your initials to record your score."));
+  var userInput = prompt("Please enter your initials to record your score.");
   localStorage.setItem(userInput, scoreKeep.innerHTML);
   clearInterval(timer);
   timerElement.innerHTML = "-"
