@@ -25,3 +25,5 @@ is wired for the container and not the individual buttons.  Currently working on
 # Screen shot of main page
 
 ![Getting Started](./assets/imgs/cqss.png)
+
+* For more info please contact wpapp90@gmail.com
